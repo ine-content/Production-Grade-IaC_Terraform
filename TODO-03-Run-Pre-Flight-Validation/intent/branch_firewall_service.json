@@ -1,0 +1,11 @@
+{
+  "tenant": "Meridian Retail",
+  "service": "branch-firewall-standard",
+  "zones": [
+    { "role": "corp", "name": "RTL-CORP-FW", "enabled": true },
+    { "role": "voice", "name": "RTL-VOICE-FW", "enabled": true },
+    { "role": "pos", "name": "RTL-POS-FW", "enabled": true },
+    { "role": "guest", "name": "RTL-GUEST-FW", "enabled": true },
+    { "role": "quarantine", "name": "RTL-QUARANTINE-FW", "enabled": false }
+  ]
+}
