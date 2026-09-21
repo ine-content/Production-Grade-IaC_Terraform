@@ -1,0 +1,22 @@
+{
+  "site_id": "rdu01",
+  "region": "us-east",
+  "environment": "prod",
+  "zone_ids": {
+    "corp": 110,
+    "voice": 120,
+    "pos": 130,
+    "guest": 140,
+    "quarantine": 150
+  },
+  "firewalls": [
+    {
+      "device_id": "rdu01-gw-primary",
+      "role": "primary"
+    },
+    {
+      "device_id": "rdu01-gw-secondary",
+      "role": "secondary"
+    }
+  ]
+}
