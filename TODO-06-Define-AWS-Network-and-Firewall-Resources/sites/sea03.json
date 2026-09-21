@@ -1,0 +1,18 @@
+{
+  "site_id": "sea03",
+  "region": "us-west",
+  "environment": "staging",
+  "zone_ids": {
+    "corp": 310,
+    "voice": 320,
+    "pos": 330,
+    "guest": 340,
+    "quarantine": 350
+  },
+  "firewalls": [
+    {
+      "device_id": "sea03-gw-primary",
+      "role": "primary"
+    }
+  ]
+}

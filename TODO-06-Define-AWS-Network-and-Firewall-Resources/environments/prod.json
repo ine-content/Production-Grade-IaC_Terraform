@@ -1,0 +1,6 @@
+{
+  "environment": "prod",
+  "description": "Production branch firewalls - live traffic, strict change control.",
+  "disabled_zones": [],
+  "auto_apply": false
+}

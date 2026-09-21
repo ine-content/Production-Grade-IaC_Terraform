@@ -1,0 +1,22 @@
+{
+  "site_id": "aus02",
+  "region": "us-central",
+  "environment": "prod",
+  "zone_ids": {
+    "corp": 210,
+    "voice": 220,
+    "pos": 230,
+    "guest": 240,
+    "quarantine": 250
+  },
+  "firewalls": [
+    {
+      "device_id": "aus02-gw-primary",
+      "role": "primary"
+    },
+    {
+      "device_id": "aus02-gw-secondary",
+      "role": "secondary"
+    }
+  ]
+}
