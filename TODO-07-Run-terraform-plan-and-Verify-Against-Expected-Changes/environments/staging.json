@@ -1,0 +1,6 @@
+{
+  "environment": "staging",
+  "description": "Staging branch firewall - newly onboarding, POS not yet cut over.",
+  "disabled_zones": ["pos"],
+  "auto_apply": true
+}
