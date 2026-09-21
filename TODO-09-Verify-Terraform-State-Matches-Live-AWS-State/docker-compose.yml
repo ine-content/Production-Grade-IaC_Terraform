@@ -1,0 +1,13 @@
+services:
+  localstack:
+    # Pinned to the last version before LocalStack started requiring a
+    # free-account auth token just to start (that requirement began with
+    # image 2026.3.0, consolidating localstack/localstack and
+    # localstack/localstack-pro into one). 4.14.0 predates that and runs
+    # with zero signup for the AWS services this course needs (EC2, VPC,
+    # subnets, route tables, security groups).
+    image: localstack/localstack:4.14.0
+    container_name: localstack
+    restart: unless-stopped
+    ports:
+      - "4566:4566"
