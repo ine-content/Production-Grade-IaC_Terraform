@@ -138,6 +138,24 @@ source, show up as a change the very next time you plan. And because your
 drift on its own, in parallel with Terraform's built-in resource diffing
 - not as a replacement for it.
 
+## Notation Used Below
+
+Every step below shows a skeleton with two kinds of blanks - the same
+two, used the same way, all the way through this file:
+
+```
+""   - you're writing your own text here, not just plugging in an
+       existing value. Sometimes that's a plain literal; sometimes
+       it's a literal combined with a reference, using ${...}
+       interpolation.
+
+...  - you're plugging in an existing value directly, with nothing of
+       your own added around it: a reference on its own, a lookup
+       into a local, a for expression, or a reference to another
+       resource's own attribute. This holds even when that value
+       already happens to be a string, or a number.
+```
+
 ## Steps
 
 ```

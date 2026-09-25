@@ -356,9 +356,9 @@ resource "aws_instance" "branch_gateway" {
     7: '''check "subnet_counts_match_expected" {
   assert {
     condition = alltrue([
-      length([for k, s in aws_subnet.zone : s if startswith(k, "rdu01-")]) == 4,
-      length([for k, s in aws_subnet.zone : s if startswith(k, "aus02-")]) == 4,
-      length([for k, s in aws_subnet.zone : s if startswith(k, "sea03-")]) == 3,
+      length([for k in keys(aws_subnet.zone) : true if startswith(k, "rdu01-")]) == 4,
+      length([for k in keys(aws_subnet.zone) : true if startswith(k, "aus02-")]) == 4,
+      length([for k in keys(aws_subnet.zone) : true if startswith(k, "sea03-")]) == 3,
     ])
     error_message = "One or more sites do not have the expected number of subnets."
   }
@@ -367,9 +367,9 @@ resource "aws_instance" "branch_gateway" {
 check "gateway_counts_match_expected" {
   assert {
     condition = alltrue([
-      length([for k, i in aws_instance.branch_gateway : i if startswith(k, "rdu01-")]) == 2,
-      length([for k, i in aws_instance.branch_gateway : i if startswith(k, "aus02-")]) == 2,
-      length([for k, i in aws_instance.branch_gateway : i if startswith(k, "sea03-")]) == 1,
+      length([for k in keys(aws_instance.branch_gateway) : true if startswith(k, "rdu01-")]) == 2,
+      length([for k in keys(aws_instance.branch_gateway) : true if startswith(k, "aus02-")]) == 2,
+      length([for k in keys(aws_instance.branch_gateway) : true if startswith(k, "sea03-")]) == 1,
     ])
     error_message = "One or more sites do not have the expected number of branch gateway devices."
   }

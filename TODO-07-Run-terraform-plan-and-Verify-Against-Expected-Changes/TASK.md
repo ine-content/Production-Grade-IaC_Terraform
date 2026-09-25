@@ -121,6 +121,24 @@ rdu01's row in the table above    -> 2
 Only once every site's comparison is true, in both check blocks, do
 both report "pass".
 
+## Notation Used Below
+
+Every step below shows a skeleton with two kinds of blanks - the same
+two, used the same way, all the way through this file:
+
+```
+""   - you're writing your own text here, not just plugging in an
+       existing value. Sometimes that's a plain literal; sometimes
+       it's a literal combined with a reference, using ${...}
+       interpolation.
+
+...  - you're plugging in an existing value directly, with nothing of
+       your own added around it: a reference on its own, a lookup
+       into a local, a for expression, or a reference to another
+       resource's own attribute. This holds even when that value
+       already happens to be a string, or a number.
+```
+
 ## Steps
 
 ```
@@ -137,18 +155,39 @@ both report "pass".
      check "subnet_counts_match_expected" { ... }
      check "gateway_counts_match_expected" { ... }
 
-3. Define check "subnet_counts_match_expected". Each blank below is its
-   own count: a for expression over aws_subnet.zone, keyed by k and
-   valued by s, filtered with an if condition down to only that site's
-   own keys using startswith(k, ...) - then wrapped in length() to turn
-   that filtered list into a number. The condition as a whole should be
-   true only when every one of the 3 sites' own count matches that
-   site's own expected subnet count from the Technical Requirements
-   table above (already filled in below), and false if even one site's
-   count is off - alltrue() combines all 3 comparisons into that single
-   true/false result. error_message just needs to describe what a
-   failure here means - Terraform requires the argument to be present,
-   but its exact wording is up to you.
+3. Define check "subnet_counts_match_expected".
+
+   Each of the 3 blanks below is its own separate count - one per
+   site. Each one follows the same shape:
+
+     for k in keys(aws_subnet.zone) : true if startswith(k, "<site>-")
+
+   k is a name you choose yourself, the same as any for expression -
+   bound to each key aws_subnet.zone has (e.g. "rdu01-corp").
+   keys(aws_subnet.zone) gives you just those key strings, with no
+   values attached - you don't need the subnet objects themselves
+   here, only their keys, so there's nothing to bind a second loop
+   variable to. The if clause keeps only the entries whose key belongs
+   to one specific site; the : true just needs to produce something,
+   anything, for each surviving entry - only the count matters here,
+   never the content, since the whole thing gets wrapped in length()
+   next to turn that filtered list into a plain number.
+
+   Fill in the skeleton so that:
+
+     each blank    - length() of a for expression like the one above,
+                     one per site, using that site's own prefix
+                     ("rdu01-", "aus02-", "sea03-")
+
+     error_message - free-form text describing what a failure here
+                     means - Terraform requires the argument to be
+                     present, but its exact wording isn't checked
+
+   The whole condition is true only when all 3 of those per-site
+   counts match their own expected number from the Technical
+   Requirements table above (already filled in below, as the numbers
+   being compared against) - alltrue() is what combines the 3
+   individual true/false comparisons into that single result.
 
    Complete the skeleton below to meet the requirements given above:
 
@@ -163,14 +202,27 @@ both report "pass".
        }
      }
 
-4. Define check "gateway_counts_match_expected". Same idea as step 3 -
-   each blank below is its own for expression, filtered with
-   startswith() and wrapped in length() - but counting
-   aws_instance.branch_gateway's own keys instead, against that site's
-   own expected gateway device count from the same table (already
-   filled in below). error_message just needs to describe what a
-   failure here means - Terraform requires the argument to be present,
-   but its exact wording is up to you.
+4. Define check "gateway_counts_match_expected". Same idea as step 3,
+   just a different resource and a different expected table column:
+
+     for k in keys(aws_instance.branch_gateway) : true if startswith(k, "<site>-")
+
+   k is a name you choose yourself again - bound to each key
+   aws_instance.branch_gateway has (e.g. "rdu01-gw-primary").
+
+   Fill in the skeleton so that:
+
+     each blank    - length() of a for expression like the one above,
+                     one per site, using that site's own prefix
+                     ("rdu01-", "aus02-", "sea03-")
+
+     error_message - free-form text describing what a failure here
+                     means - Terraform requires the argument to be
+                     present, but its exact wording isn't checked
+
+   Compared against each site's own expected gateway device count from
+   the same Technical Requirements table (already filled in below),
+   combined with alltrue() the same way as step 3.
 
    Complete the skeleton below to meet the requirements given above:
 
